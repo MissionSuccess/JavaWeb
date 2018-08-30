@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
+		<title></title>
+		<script type="text/javascript" src="js/jquery-1.8.0.js" ></script>
+		<script type="text/javascript" src="laydate/laydate.js" ></script>
+		<script src="lib/jquery-3.3.1.min.js"></script>
+		<script src="lib/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="css/index.css" />
+		<link rel="stylesheet" type="text/css" href="lib/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/motai.css"/>
+		<script type="text/javascript" src="js/index.js" ></script>
+		<script>
+			var nowShow = 1;
+			function showtime(index){
+				if (Number(index)) {
+					clearTimeout(sid);
+					nowShow = index;
+				}
+				for (var i = 1;i<5;i++) {
+					if(i ==nowShow)
+					document.getElementById("img"+nowShow).style.display = "block";
+					else
+					document.getElementById("img"+i).style.display = "none";
+					
+				}
+				if (nowShow == 4) 
+					nowShow = 1;
+				 else
+					nowShow++;
+				
+				sid = setTimeout('showtime()',3000);
+			}
+			
+			 lay('#version').html('-v'+ laydate.v);
+			laydate.render({
+    			  elem: '#test6'
+    		  ,range: true
+   			 });
+   			 
+			laydate.render({
+	     		 elem: '#test7'
+	      		,range: true
+	    	});
+		</script>
+
+   			
+   			 
+		<style type="text/css">
+
+</style>
+	</head>
+	<body onload="showtime()">
+		
+		 <div id="top">
+			<div id="top_logo">
+				<img alt="logo" src="img/index/top/logo.jpg" width="274" height="49" style="vertical-align:middle;">
+			</div>
+		<div id="top_links">
+			<div id="top_op">
+				<ul>
+					<li>
+						<img alt="当前用户" src="img/index/top/user.jpg">：
+						<a href="login.jsp" style="text-decoration: none;color: #ADADAD;"><span>登录</span></a>/<a href="register.jsp"  style="text-decoration: none;color: #ADADAD;"><span>注册</span></a>
+					</li>
+					
+					<!-- <li> id="user_tx">
+						<img  alt="当前用户" src="img/登录.jpg" style="width: 30px;border-radius: 50%;margin-top: -6px;">
+						<span>admin,欢迎您</span>
+					</li>--!>
+					
+					<li>
+						<img alt="事务月份" src="img/index/top/month.jpg">：
+						<span id="yue_fen"></span>
+					</li>
+					<li>
+						<img alt="今天是" src="img/index/top/date.jpg">：
+						<span id="day_day"></span>
+					</li>
+				</ul> 
+				<div id="top_user">
+						<div  data-toggle="modal" data-target="#myModa_grxx" id="top_user_grxx">个人信息</div>
+						<div data-toggle="modal" data-target="#myModa_lsdd">历史订单</div>
+				</div>
+			</div>
+			<div id="top_close">
+				<a href="#"  target="_parent">
+					<img alt="退出系统" title="退出系统" src="img/index/top/close.jpg" style="position: relative; top: 10px; left: 25px;">
+				</a>
+			</div>
+		</div>
+	</div>
+	
+	<!--
+    	top模态框start
+    -->
+    <div class="modal fade" id="myModa_grxx" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form action="${pageContext.request.contextPath }/DdclServlet?m=add&fjbh=${param.fjbh}&grbh=${user.grbh}" method="post" name="grbh_form">
+			
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						个人信息
+					</h4>
+				</div>
+				<div class="modal-body" style="text-align: ;">
+				
+				<table id="table-grxx">
+					<tr>
+						<td class="yhxx1">个人编号:<input type="text" class="yhxx" id="grbh" value="" readonly="readonly"/></td>
+					</tr>
+					<tr>
+						<td class="yhxx1">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:<input type="text" class="yhxx" id="zh" value=""readonly="readonly" /></td>
+					</tr>
+					<tr>
+						<td class="yhxx1">用&nbsp;&nbsp;户&nbsp;&nbsp;名:<input type="text" class="yhxx" id="yhm" value=""readonly="readonly" /><span id="yhmspan"></span></td>
+					</tr>
+					<tr>
+		                <td class="yhxx1" readonly="readonly">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别
+								<select name="xb"style="margin-top: 20px;" >
+									<option value="男">男</option>
+									<option value="女">女</option>
+								</select>
+						</td>
+		            </tr>
+					<tr>
+						<td class="yhxx1">联系方式:<input type="text" class="yhxx" id="lxfs" value=""readonly="readonly" /><span id="lxfsspan"></span></td>
+					</tr>
+					<tr>
+						<td class="yhxx1">注册时间:<input type="text" class="yhxx" id="zcsj" value=""readonly="readonly" /></td>
+					</tr>
+					<tr>
+						<!--<td class=""><input type="button" class="" id="xiugai" value="修改" style="font-size: 20px;" /></td>
+						<td class=""><input type="reset"  class="" id="login_ret" value="重 置" style="font-size:20px;"></td>-->
+					</tr>
+				</table>
+	
+				
+				</div>
+				<div class="modal-footer" style="text-align: center;">
+					<button type="reset" class="btn btn-default" id="login_ret" value="重 置"  style=";margin-right: 10px;">重置
+					</button>
+					<button  id="xiugai" value="修改"  type="button" class="btn btn-primary"  style="margin-left: 10px;"  >
+						修改
+					</button>
+				</div>
+			</form>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+
+ <div class="modal fade" id="myModa_lsdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						历史订单
+					</h4>
+				</div>
+				<div class="modal-body" style="text-align: ;">
+				<div class="wdtz_cg" data-toggle="modal" data-target="#myModa_grxx_lsdd">
+					<span class="wdtz_time"></span>   “张某某”---“民宿名字”---“豪华大民宿”，预定"成功""！
+				</div>
+				<div  class="wdtz_cg" data-toggle="modal" data-target="#myModa_grxx_lsdd">
+					<span class="wdtz_time"></span>   “张某某”---“民宿名字”---“豪华大民宿”，预定"成功""！
+				</div>
+				<div  class="wdtz_sb" data-toggle="modal" data-target="#myModa_grxx_lsdd">
+					<span class="wdtz_time"></span>   “张某某”---“民宿名字”---“豪华大民宿”，预定"失败""！
+				</div>
+				
+				
+				
+				</div>
+				<div class="modal-footer" style="text-align: center;">
+					<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-right: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;关闭&nbsp;&nbsp;&nbsp;&nbsp;
+					</button>
+				</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="myModa_grxx_lsdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					订单信息
+				</h4>
+			</div>
+			<div class="modal-body" style="text-align: center;">
+			<div id="room_xq">
+				<img src="img/room/room1.jpg"/>
+				
+				<div class="nr ddxx">
+					<div>
+						<b>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</b>张某某
+					</div>
+					<div>
+						<b>联系方式：</b>1888888888
+					</div>
+					<div>
+						<b>入住人数：</b>4
+					</div>
+					<div>
+						<b>预定时间：</b>2018-05-05 - 2018-05-09
+					</div>
+					<div>
+						<b>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点：</b>北京大民宿
+					</div>
+					
+				</div>
+			</div>
+			</div>
+			<div class="modal-footer" style="text-align: center;">
+				<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-right: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;关闭&nbsp;&nbsp;&nbsp;&nbsp;
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+    
+    <!--
+    	top模态框end
+    -->
+    
+    <!--
+    	作者：az624151713@qq.com
+    	时间：2018-08-07
+    	描述：轮播
+    -->
+   
+   	<div id="lunbo">
+   		<div id="oneleftimg">
+			<img id="img1" src="img/lunbo/b5.jpg" style="display: block;" border="1"/>
+			<img id="img2" src="img/lunbo/b6.jpg" style="display: none;" border="1"/>
+			<img id="img3" src="img/lunbo/b7.jpg" style="display: none;" border="1"/>
+			<img id="img4" src="img/lunbo/b5.jpg" style="display: none;" border="1"/>
+		</div>
+   	</div>
+   	
+   	<!--
+       	作者：az624151713@qq.com
+       	时间：2018-08-08
+       	描述：第三部分
+       -->
+   
+   	<div id="xuanxiang">
+   		<div id="xx">
+			<div class="demo">
+			  <div>
+			  		 目的地：
+			    <input type="text" value="" size="36" id="getcity_name" name="getcity_name" mod="address|notice" mod_address_source="hotel" mod_address_suggest="@Beijing|北京|53@Shanghai|上海|321@Shenzhen|深圳|91@Guangzhou|广州|80@Qingdao|青岛|292@Chengdu|成都|324@Hangzhou|杭州|383@Wuhan|武汉|192@Tianjin|天津|343@Dalian|大连|248@Xiamen|厦门|61@Chongqing|重庆|394@" mod_address_reference="getcityid" mod_notice_tip="中文/拼音" />
+			    <input id="getcityid" name="getcityid" type="hidden" value="{$getcityid}" />
+			  </div>
+			  <div>
+			  		日期：
+			  	<input type="text" class="demo-input" placeholder="日期范围" id="test6">
+			  </div>
+			</div>
+			<div id="jsContainer" class="jsContainer" style="height:0">
+			  <div id="tuna_alert" style="display:none;position:absolute;z-index:999;overflow:hidden;"></div>
+			  <div id="tuna_jmpinfo" style="visibility:hidden;position:absolute;z-index:120;"></div>
+			</div>
+		</div>
+   	</div>
+   	
+   	<div id="room">
+   		<div id="room_1">
+			<div class="room" data-toggle="modal" data-target="#myModal">
+				<img src="img/room/room1.jpg"/>
+				<p>厦门 • 「鹭宿」C4湾景楼中C4湾景楼中楼近...</p>
+				<div>5.0分33条评论舒适型3居可住6人已订40晚</div>
+   			</div>
+   			<div class="room" data-toggle="modal" data-target="#myModal">
+				<img src="img/room/room1.jpg"/>
+				<p>厦门 • 「鹭宿」C4湾景楼中C4湾景楼中楼近...</p>
+				<div>5.0分33条评论舒适型3居可住6人已订40晚</div>
+   			</div>
+   			<div class="room" data-toggle="modal" data-target="#myModal">
+				<img src="img/room/room1.jpg"/>
+				<p>厦门 • 「鹭宿」C4湾景楼中C4湾景楼中楼近...</p>
+				<div>5.0分33条评论舒适型3居可住6人已订40晚</div>
+   			</div>
+   			
+   			<div class="room" data-toggle="modal" data-target="#myModal">
+				<img src="img/room/room1.jpg"/>
+				<p>厦门 • 「鹭宿」C4湾景楼中C4湾景楼中楼近...</p>
+				<div>5.0分33条评论舒适型3居可住6人已订40晚</div>
+   			</div>
+   			<div class="room" data-toggle="modal" data-target="#myModal">
+				<img src="img/room/room1.jpg"/>
+				<p>厦门 • 「鹭宿」C4湾景楼中C4湾景楼中楼近...</p>
+				<div>5.0分33条评论舒适型3居可住6人已订40晚</div>
+   			</div>
+   			<div class="room" data-toggle="modal" data-target="#myModal">
+				<img src="img/room/room1.jpg"/>
+				<p>厦门 • 「鹭宿」C4湾景楼中C4湾景楼中楼近...</p>
+				<div>5.0分33条评论舒适型3居可住6人已订40晚</div>
+   			</div>
+   		</div>
+   	</div>
+   	
+   	<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					房间信息
+				</h4>
+			</div>
+			<div class="modal-body" style="text-align: center;">
+			<div id="room_xq">
+				<img src="img/room/room1.jpg"/>
+				<div id="room_xq_bt">
+					<ul>
+					<li><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+						<b>北京</b>
+					</li>
+					<li>
+						<span class="glyphicon glyphicon-user"></span>
+						<b>可住4人</b>
+					</li>
+					<li>
+						<span class="glyphicon glyphicon-map-markerglyphicon glyphicon-" aria-hidden="true"></span>
+						<b>￥100/晚</b>
+					</li>
+					</ul>
+				</div>
+				
+				<div class="nr">
+					<ul>
+						<li><b>房源介绍</b></li>
+						<li>
+							<div>
+							<span>房源介绍:</span>豪华大民宿
+							</div>
+							<div>
+							<span>被单更换:</span>一客一换
+							</div>
+							<div>
+							<span>床类型:</span>1.8*2米
+							</div>
+							<div>
+							<span>是否地下室:</span>否
+							</div>
+						</li>
+					</ul>
+					<ul>
+						<li><b>配套设施</b></li>
+						<li>
+							无线wifi 空调 冰箱 洗衣机 电视 24小时热水 电脑 早餐 做饭 卫生间
+						</li>
+					</ul>
+					<ul>
+						<li><b>收费说明</b></li>
+						<li>
+							 预付订金：100%  提交订单后，支付总房费的100%作为预付订金交付蚂蚁平台
+						</li>
+					</ul>
+					<ul style="height: 80px;">
+						<li><b>入住须知</b></li>
+						<li>
+							 <div>
+							<span>接待时间:</span>00:00-24:00
+							</div>
+							<div>
+							<span>最少入住:</span>1天
+							</div>
+							<div>
+							<span>退房时间:</span>12:00以前
+							</div>
+							<div>
+							<span>最多入住:</span>180天
+							</div>
+							<div>
+							<span>入住时间:</span>14:00以后
+							</div>
+							<div>
+							<span>联系方式:</span>18593276510
+							</div>
+						</li>
+					</ul>
+					<ul style="height: 300px;">
+						<div id="container" style="height: 300px;"></div>
+						
+					</ul>
+				</div>
+			</div>
+			</div>
+			<div class="modal-footer" style="text-align: center;">
+				<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-right: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;关闭&nbsp;&nbsp;&nbsp;&nbsp;
+				</button>
+				<button id="dg" type="button" class="btn btn-primary" style="margin-left: 10px;" data-toggle="modal" data-target="#myModa2">
+					&nbsp;&nbsp;&nbsp;&nbsp;订购&nbsp;&nbsp;&nbsp;&nbsp;
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+
+   	<!-- 模态框（Moda2） -->
+<div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form action="${pageContext.request.contextPath }/DdclServlet?m=add&fjbh=${param.fjbh}&grbh=${user.grbh}" method="post" name="">
+			
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						填写订单
+					</h4>
+				</div>
+				<div class="modal-body" style="text-align: ;">
+				
+				<div id="dg_form">
+				
+					<ul>
+						
+						<li>预订时间：<input type="text" class="demo-input" placeholder="日期范围" id="test7" name="ydsj"></li>
+						<div class="dg_form_eorr">
+							2323
+						</div>
+					<li>联系方式：<input type="text" name="lxfs" /></li>
+					<div class="dg_form_eorr">
+							2323
+						</div>
+					<li>入住人数：
+					<input type="text" name="" id="" value="" />
+					</li>
+						<div class="dg_form_eorr">
+						
+						</div>
+					<li>
+						姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<input type="text" name="xm" />
+					</li>
+					<div class="dg_form_eorr">
+							2323
+						</div>
+					<li>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：
+						<input type="radio" name="xb" id="1" value="男" />男
+						<input type="radio" name="xb" id="1" value="女" />女
+					</li>
+					<div class="dg_form_eorr">
+						
+						</div>
+					<li>
+						身份证号：<input type="text" name="sfzh" />
+					</li>
+					</ul>
+				
+					</div>
+	
+				
+				</div>
+				<div class="modal-footer" style="text-align: center;">
+					<button type="button" class="btn btn-default" data-dismiss="modal" style="margin-right: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;关闭&nbsp;&nbsp;&nbsp;&nbsp;
+					</button>
+					<button  id="tj" type="submit" class="btn btn-primary"  style="margin-left: 10px;"  >
+						&nbsp;&nbsp;&nbsp;&nbsp;提交&nbsp;&nbsp;&nbsp;&nbsp;
+					</button>
+				</div>
+			</form>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=86zC5ZC7PlXKE4qU3YfvTkCdq6ZOHahE"></script>
+   	<!--
+       	作者：az624151713@qq.com
+       	时间：2018-08-08
+       	描述：QQ
+       -->
+       
+       <div id="sideouterPanel">
+	<div id="sidePanel">
+		<div class="side-qq"><!--QQ-->
+			<span></span>
+			<div>
+				<a target="QQframe" href="tencent://message/?uin=624151713&Site=网站名称&Menu=yes">
+					<img src="img/s-qq.png"/>
+				</a>
+				<span>咨询客服<br/>624151713</span>
+				<iframe name="QQframe" style="display:none;">我是隐藏的，你看不到我</iframe>
+			</div>
+		</div>
+		
+		<div class="side-tel"><!--电话-->
+			<span></span>
+			<div>
+				<img src="img/s-tel.png"/>
+				<span>服务热线<br/>13010001000</span>
+			</div>
+		</div>
+		
+		<div class="side-ewm"><!--二维码-->
+			<div>
+				<img src="img/s-ewm.png"/>
+			</div>
+		</div>
+		
+		
+		<div class="side-top"><!--回到顶部-->
+			<a href="#top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+			
+		</div>
+	</div>
+	</div>
+		<script src="js/yhxx.js"></script>
+	   <script src="js/fixdiv.js"></script>
+		<script src="js/address.js"></script>
+		
+	</body>
+
+</html>

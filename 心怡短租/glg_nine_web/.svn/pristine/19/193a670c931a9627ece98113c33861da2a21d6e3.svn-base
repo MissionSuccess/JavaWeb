@@ -1,0 +1,36 @@
+
+*{
+	padding: 0px;
+	margin: 0px;
+}
+#top{
+	height: 60px;
+	width: 100%;
+	background-color:#808080;
+}
+#main1{
+	background-color: #EEEEEE;
+}
+table{
+	padding-top: 4%;
+	border-style:none ;
+}
+th{
+	border: solid 1px #DDD;
+	text-align: center;
+	padding: 10px 15px;
+	font-size: 18px;
+	color: #303030;
+	background-color:#EEEEEE;
+}
+ td{
+	border: solid 1px #DDD;
+	text-align: center;
+	padding: 10px 15px;
+	font-size: 15px;
+	color: #303030;
+	border-top-style:none ;
+}
+#button{
+	text-align: center;
+}

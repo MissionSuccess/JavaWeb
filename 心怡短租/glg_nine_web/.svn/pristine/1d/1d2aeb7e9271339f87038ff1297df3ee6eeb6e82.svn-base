@@ -1,0 +1,73 @@
+package com.Nine.Sky_lnn.control;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
+
+import org.apache.taglibs.standard.tag.common.sql.DataSourceUtil;
+
+import com.Nine.Sky_lnn.bean.Dlxxb;
+import com.Nine.Sky_lnn.bean.Yhxxb;
+import com.Nine.Sky_lnn.service.DlxxbService;
+import com.Nine.Sky_lnn.service.YhxxbService;
+import com.Nine.Sky_lnn.util.DateUtil;
+import com.Nine.Sky_lnn.util.UUIDUtil;
+
+import oracle.net.aso.a;
+
+/**
+ * Servlet implementation class zhuceServlet
+ */
+@WebServlet("/zhuceServlet")
+public class zhuceServlet extends HttpServlet {
+	private DlxxbService dlxxbService=new DlxxbService();
+	private YhxxbService yhxxbService=new YhxxbService();
+	private static final long serialVersionUID = 1L;
+       
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String zh=request.getParameter("userEntity.userCode");
+		String yhm=request.getParameter("userEntity.userCode2");
+		String pwd=request.getParameter("userEntity.password");
+		String lxfs="";
+		String grbh = UUIDUtil.getUuid();
+		String zcsj = DateUtil.getNow();
+		String sfbz="1";
+		String tx="";
+		String xb="男";
+		Dlxxb dlxxb=new Dlxxb(grbh, zh, pwd, sfbz, tx);
+		Yhxxb yhxxb=new Yhxxb(grbh, zh, yhm, xb, lxfs, zcsj);
+		boolean a = dlxxbService.isExist(dlxxb);
+		boolean b = yhxxbService.isExist(yhxxb);
+		System.out.println(a);
+		
+		System.out.println(b);
+		if (!(b&&a)) {
+			boolean c = dlxxbService.add(dlxxb);
+			boolean d = yhxxbService.add(yhxxb);
+			System.out.println(dlxxb);
+			System.out.println(yhxxb);
+			System.out.println(c);
+			System.out.println(d);
+		  if (c&&d) {
+			  response.sendRedirect(request.getContextPath() + "/login.jsp");
+		}
+		}else {
+			response.sendRedirect(request.getContextPath() + "/register.jsp");
+		}
+		
+		 
+		
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

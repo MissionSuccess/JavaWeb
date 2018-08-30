@@ -1,0 +1,127 @@
+package com.Nine.Sky_lnn.control;
+
+import java.io.IOException;
+
+import javax.mail.Session;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.Nine.Sky_lnn.bean.Dlxxb;
+import com.Nine.Sky_lnn.bean.Yhxxb;
+import com.Nine.Sky_lnn.service.DlxxbService;
+import com.Nine.Sky_lnn.service.YhxxbService;
+
+
+
+/**
+ * Servlet implementation class denglu
+ * @param <YhService>
+ */
+@WebServlet("/dengluServlet")
+public class dengluServlet<YhService> extends HttpServlet {
+	private DlxxbService dlxxbService= new DlxxbService();
+	private YhxxbService yhxxbService=new YhxxbService();
+	private static final long serialVersionUID = 1L;
+	public void	service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String m = request.getParameter("m");
+		if("login".equals(m)) {
+			login(request, response);
+		}else if ("dele".equals(m)) {
+			dele(request, response);
+		}
+	}
+	
+	private void dele(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		request.getSession().removeAttribute("yhuser");
+		request.getSession().removeAttribute("yhxx");
+		response.sendRedirect(request.getContextPath() + "/index.jsp");
+	}
+
+	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Dlxxb dlxxb=new Dlxxb();
+		Yhxxb yhxxb=new Yhxxb();
+		 String zh=request.getParameter("userEntity.userCode");
+		 String pwd=request.getParameter("userEntity.password");
+		 Cook(request, response, zh, pwd);
+		 
+		 System.out.println(zh+pwd);
+		 dlxxb.setZh(zh);
+		 dlxxb.setPwd(pwd);
+		 yhxxb.setZh(zh);
+		
+		 boolean a = dlxxbService.isExistlogin(dlxxb);
+		 System.out.println(a);
+		 boolean b =yhxxbService.isExist(yhxxb);
+		 System.out.println(b);
+		
+		  Dlxxb dlxxb2 = dlxxbService.selectByZh(zh);
+		  Yhxxb yhxxb2 = yhxxbService.selectById(dlxxb2.getGrbh());
+		  
+		  if (dlxxb2!=null&&yhxxb2!=null) {
+			request.getSession().setAttribute("yhuser",dlxxb2);
+			request.getSession().setAttribute("yhxx", yhxxb2);
+		}
+		 System.out.println(dlxxb2.getSfbz());
+		 if (a&&b&&dlxxb2.getSfbz().equals("1")) {
+		 response.sendRedirect(request.getContextPath() + "/index.jsp");
+		 
+		}else if(a&&b&&dlxxb2.getSfbz()=="0") {
+			
+		}
+		 
+		 else {
+			 response.sendRedirect(request.getContextPath() + "/login.jsp?m=1&yhm="+zh);
+		}
+		 
+		 
+		 
+	}
+	
+	private void Cook(HttpServletRequest request, HttpServletResponse response, String zh, String pwd) {
+		//Cookie管理
+		String remeberme = request.getParameter("remeberme");
+		if(remeberme != null){
+			Cookie[] cks = request.getCookies();
+			if(null != cks){
+				int i ;
+				for(i = 0; i < cks.length; i++){
+					if("zh".equals(cks[i].getName())){
+						break;
+					}
+				}
+				if(i == cks.length){
+					Cookie uk = new Cookie("zh",zh);
+					Cookie pk = new Cookie("pwd",pwd);
+					uk.setPath(request.getContextPath());
+					pk.setPath(request.getContextPath());
+					uk.setMaxAge(600);
+					pk.setMaxAge(600);
+					
+					response.addCookie(uk);
+					response.addCookie(pk);
+				}
+			}
+		}else{
+			Cookie[] cks = request.getCookies();
+			for(int i = 0; i < cks.length; i++){
+				if("zh".equals(cks[i].getName()) || "pwd".equals(cks[i].getName())){
+					System.out.println("注销了");
+					Cookie uk = new Cookie("zh",null);
+					Cookie pk = new Cookie("pwd",null);
+					cks[i].setMaxAge(0);
+					
+				}
+				
+			}
+		}
+		
+	}
+
+	
+	
+
+}
